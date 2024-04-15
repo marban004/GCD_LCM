@@ -1,1 +1,2 @@
 # GCD_LCM
+Console app designed to find GCD (Greatest Common Denominator) and LCM (Least Common Multiple) using prime factorization method. App can also display prime factorization of a number. App is made for windows cmd and will not work with UNIX systems due to using functions specific to windows cmd. Due to time constraints classes were not separeted into files. App made with MVC model. Made with c++ 20. Tested on Windows 11 Pro.
