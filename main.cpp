@@ -17,6 +17,7 @@
 
 using namespace std;
 
+
 class View
 {
     HANDLE u;
@@ -30,7 +31,7 @@ class View
     void ShowMenu()
     {
         system("CLS");
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,0});
+        SetConsoleCursorPosition(u,{0,0});
         cout << left << setfill('-') << setw(59) << "+Wybierz opcje" << "+" << endl;
         cout << left << setfill(' ') << setw(59) << "|1.Wylicz NWW i NWD" << "|" << endl;
         cout << left << setfill(' ') << setw(59) << "|2.Wypisz rozklad na czynniki pierwsze" << "|" << endl;
@@ -47,13 +48,13 @@ class View
         cout << left << setfill('-') << setw(59) << "+"  << "+" << endl;
         for(auto &ele: *PrimeSeq)
         {
-            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,i});
+            SetConsoleCursorPosition(u,{0,i});
             printf("|%d[%d] ", ele.first, ele.second);
-            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{59,i});
+            SetConsoleCursorPosition(u,{59,i});
             cout<<"|"<<endl;
             i++;
         }
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,i});
+        SetConsoleCursorPosition(u,{0,i});
         cout << left << setfill(' ') << setw(59) << "|Wcisnij enter aby kontynuowac"  << "|" << endl;
         cout << left << setfill('-') << setw(59) << "+"  << "+" << endl;
     }
@@ -61,7 +62,7 @@ class View
     void PrintInputPrompt()
     {
         system("CLS");
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,0});
+        SetConsoleCursorPosition(u,{0,0});
         cout << left << setfill('-') << setw(59) << "+Wpisz wartosc (liczba naturalna, wieksz od 0)" << "+" << endl;
         cout << left << setfill(' ') << setw(59) << "|Wartosc: " << "|" << endl;
         cout << left << setfill('-') << setw(59) << "+" << "+" << endl;
@@ -70,18 +71,18 @@ class View
     void PrintConfirmation()
     {
         system("CLS");
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,0});
+        SetConsoleCursorPosition(u,{0,0});
         cout << left << setfill('-') << setw(59) << "+" << "+" << endl;
         cout << left << setfill(' ') << setw(59) << "|Wartosc przyjeta" << "|" << endl;
         cout << left << setfill(' ') << setw(59) << "|Wcisnij enter aby kontynuwac" << "|" << endl;
         cout << left << setfill('-') << setw(59) << "+" << "+" << endl;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,4});
+        SetConsoleCursorPosition(u,{0,4});
     }
 
     void PrintNWWNWD(int NWW, int NWD, int Value1, int Value2)
     {
         system("CLS");
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,0});
+        SetConsoleCursorPosition(u,{0,0});
         cout << left << setfill('-') << setw(59) << "+" << "+" << endl;
         cout << left << setfill(' ') << setw(59) << "|liczba 1: " << "|" << endl;
         cout << left << setfill(' ') << setw(59) << "|liczba 2: " << "|" << endl;
@@ -89,15 +90,15 @@ class View
         cout << left << setfill(' ') << setw(59) << "|NWD wprowadzonych liczb: " << "|" << endl;
         cout << left << setfill(' ') << setw(59) << "|Wcisnij enter by kontynuowac " << "|" << endl;
         cout << left << setfill('-') << setw(59) << "+" << "+" << endl;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{11,1});
+        SetConsoleCursorPosition(u,{11,1});
         cout<<Value1;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{11,2});
+        SetConsoleCursorPosition(u,{11,2});
         cout<<Value2;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{25,3});
+        SetConsoleCursorPosition(u,{25,3});
         cout<<NWW;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{25,4});
+        SetConsoleCursorPosition(u,{25,4});
         cout<<NWD;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),{0,7});
+        SetConsoleCursorPosition(u,{0,7});
     }
 };
 
@@ -108,6 +109,16 @@ class Model
     Model()
     {
 
+    }
+
+    int pow(int a, int b)
+    {
+        int result = 1;
+        for(int i = 0; i < b; i++)
+        {
+            result *= a;
+        }
+        return result;
     }
 
     void GeneratePrimeSequence(int number, map<int, int>* PrimeSeq)
@@ -147,11 +158,11 @@ class Model
     {
         if(it -> second < (*Value2PrimeSeq)[it -> first])
         {
-            NWW *= pow(it -> first, (*Value2PrimeSeq)[it -> first]);
+            NWW *= this -> Model::pow(it -> first, (*Value2PrimeSeq)[it -> first]);
         }
         else
         {
-            NWW *= pow(it -> first,it -> second);
+            NWW *= this -> Model::pow(it -> first,it -> second);
         }
     }
         return NWW;
@@ -171,11 +182,11 @@ class Model
     {
         if(it -> second > (*Value2PrimeSeq)[it -> first] )
         {
-            NWD *= pow(it -> first, (*Value2PrimeSeq)[it -> first]);
+            NWD *= this -> Model::pow(it -> first, (*Value2PrimeSeq)[it -> first]);
         }
         else
         {
-            NWD *= pow(it -> first,it -> second);
+            NWD *= this -> Model::pow(it -> first, it -> second);
         }
     }
         return NWD;
